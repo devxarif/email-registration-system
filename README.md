@@ -42,3 +42,8 @@ After setting up the API, you can register a user by sending a POST request to t
 - Composer
 - PostgreSQL (Optional: Docker for local development)
 - Docker (for containerization)
+
+## 🎥 Demo Video
+
+https://www.loom.com/share/0a4dcd84b134455f924715ef76f5ea73?sid=7ae7814e-7afa-4744-808a-b85c01d4b459
+
