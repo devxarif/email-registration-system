@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\WelcomeMail;
+use App\Services\GmailService;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,8 +22,10 @@ class SendWelcomeEmail implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(GmailService $gmail): void
     {
-        Mail::to($this->email)->send(new WelcomeMail($this->email));
+        $subject = 'Welcome to Application';
+        $body = "Hi,\n\nThank you for registering with us.\n\nRegards,\nTeam";
+        $gmail->send($this->email, $subject, $body);
     }
 }
