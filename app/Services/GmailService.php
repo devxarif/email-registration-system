@@ -35,6 +35,14 @@ class GmailService
         }
     }
 
+    /**
+     * Send an email using Gmail API.
+     *
+     * @param string $to
+     * @param string $subject
+     * @param string $body
+     * @return void
+     */
     public function send($to, $subject, $body)
     {
         $service = new Gmail($this->client);

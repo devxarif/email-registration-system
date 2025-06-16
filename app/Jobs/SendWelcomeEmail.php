@@ -19,6 +19,7 @@ class SendWelcomeEmail implements ShouldQueue
     {
         $this->email = $email;
     }
+
     /**
      * Execute the job.
      */

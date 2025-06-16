@@ -8,10 +8,15 @@ use Google\Service\Gmail;
 
 class GmailController extends Controller
 {
+    /**
+     * Handle the incoming request to authorize Gmail API access.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function authorize()
     {
         $client = new Client();
-        $client->setApplicationName('Gmail API PHP Quickstart');
+        $client->setApplicationName('Registration Application - Gmail API');
         $client->setScopes(Gmail::MAIL_GOOGLE_COM);
         $client->setAuthConfig(storage_path('credentials.json'));
         $client->setAccessType('offline');
@@ -22,10 +27,16 @@ class GmailController extends Controller
         return redirect($authUrl);
     }
 
+    /**
+     * Handle the callback from Gmail API after authorization.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function callback(Request $request)
     {
         $client = new Client();
-        $client->setApplicationName('Gmail API PHP Quickstart');
+        $client->setApplicationName('Registration Application - Gmail API');
         $client->setScopes(Gmail::MAIL_GOOGLE_COM);
         $client->setAuthConfig(storage_path('credentials.json'));
         $client->setAccessType('offline');
@@ -38,32 +49,5 @@ class GmailController extends Controller
         file_put_contents(storage_path('token.json'), json_encode($token));
 
         return redirect()->route('gmail.send')->with('success', 'Authorization successful!');
-    }
-
-    public function getClient()
-    {
-        $client = new Client();
-        $client->setApplicationName('Gmail API PHP Quickstart');
-        $client->setScopes(Gmail::MAIL_GOOGLE_COM);
-        $client->setAuthConfig(storage_path('credentials.json'));
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
-        $client->setRedirectUri(route('gmail.callback'));
-
-        $tokenPath = storage_path('token.json');
-
-        if (file_exists($tokenPath)) {
-            $accessToken = json_decode(file_get_contents($tokenPath), true);
-            $client->setAccessToken($accessToken);
-
-            if ($client->isAccessTokenExpired()) {
-                if ($client->getRefreshToken()) {
-                    $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-                    file_put_contents($tokenPath, json_encode($client->getAccessToken()));
-                }
-            }
-        }
-
-        return $client;
     }
 }
