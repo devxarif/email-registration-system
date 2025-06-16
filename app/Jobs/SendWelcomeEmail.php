@@ -25,6 +25,7 @@ class SendWelcomeEmail implements ShouldQueue
      */
     public function handle(GmailService $gmail): void
     {
+        info('Sending welcome email to: ' . $this->email. ' ' . 'SendWelcomeEmail Job');
         $subject = 'Welcome to Application';
         $body = "Hi,\n\nThank you for registering with us.\n\nRegards,\nTeam";
         $gmail->send($this->email, $subject, $body);

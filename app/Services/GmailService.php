@@ -12,6 +12,7 @@ class GmailService
 
     public function __construct()
     {
+        info('Initializing GmailService' . ' ' . 'GmailService Constructor');
         $this->client = new Client();
         $this->client->setApplicationName('Registration Gmail API');
         $this->client->setScopes(Gmail::MAIL_GOOGLE_COM);
@@ -45,6 +46,7 @@ class GmailService
      */
     public function send($to, $subject, $body)
     {
+        info('Sending email to: ' . $to . ' ' . 'GmailService send method');
         $service = new Gmail($this->client);
 
         $strRawMessage = "To: {$to}\r\n";

@@ -17,6 +17,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        info('Register Started'. '' . 'RegisterController');
         $validator = Validator::make($request->all(), [
             'email' => 'required|email|unique:users,email',
         ]);
@@ -25,7 +26,10 @@ class RegisterController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        info('Validation passed'. '' . 'RegisterController');
         $user = User::create(['email' => $request->email]);
+
+        info('User created with email: ' . $user->email . ' ' . 'RegisterController');
 
         dispatch(new SendWelcomeEmail($user->email));
 
