@@ -25,7 +25,7 @@ cp .env.example .env
 composer install
 php artisan key:generate
 
-docker-compose up --build
+docker compose up -d --build
 ```
 
 ## 📧 Usage
